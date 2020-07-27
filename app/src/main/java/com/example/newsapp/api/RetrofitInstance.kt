@@ -1,6 +1,6 @@
 package com.example.newsapp.api
 
-import com.example.newsapp.Constants.Companion.BASE_URL
+import com.example.newsapp.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
