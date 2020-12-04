@@ -7,32 +7,28 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
 import com.example.newsapp.adapters.SongAdapter
-import com.example.newsapp.db.ArticleDao
 
-import com.example.newsapp.db.NewsViewModel
-import com.example.newsapp.model.Article
+import com.example.newsapp.db.SongViewModel
+import com.example.newsapp.model.Song
 import com.example.newsapp.util.Resource
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import kotlinx.android.synthetic.main.fragment_breaking_news.paginationProgressBar
-import kotlinx.android.synthetic.main.fragment_search_news.*
-import kotlinx.android.synthetic.main.item_article_preview.*
+import kotlinx.android.synthetic.main.fragment_search.*
+
 import kotlinx.coroutines.*
 
 
-class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
+class SearchFragment : Fragment(R.layout.fragment_search) {
 
     val TAG = "SearchNewsFragment"
 
-    lateinit var viewModel: NewsViewModel
+    lateinit var viewModel: SongViewModel
     lateinit var songAdapter:SongAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
+        viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
         songAdapter.setOnItemClickListener {
@@ -42,8 +38,8 @@ val name = it.artistName
             val price = it.collectionPrice
             val trackName = it.trackName
             val collectionPrice = it.collectionPrice
-            val article = Article(name,collection,price,trackName,collectionPrice)
-            GlobalScope.launch { viewModel.newsRepository.upsert(article) }
+            val article = Song(name,collection,price,trackName,collectionPrice)
+            GlobalScope.launch { viewModel.songRepository.upsert(article) }
             Toast.makeText(activity,"Saved in Room Database",Toast.LENGTH_LONG).show()
         }
         var job: Job? = null

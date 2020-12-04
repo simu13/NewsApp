@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity(
     tableName = "articles"
 )
-data class Article(
+data class Song(
 
     val artistName: String="",
     val collectionName: String="",

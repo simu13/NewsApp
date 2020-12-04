@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.newsapp.model.Article
+import com.example.newsapp.model.Song
 
 @Database(
-    entities = [Article::class],
+    entities = [Song::class],
     version = 1
 )
 

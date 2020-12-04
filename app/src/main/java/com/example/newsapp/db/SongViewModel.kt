@@ -8,8 +8,8 @@ import com.example.newsapp.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class NewsViewModel(
-    val newsRepository: NewsRepository
+class SongViewModel(
+    val songRepository: SongRepository
 ) : ViewModel() {
 
 
@@ -21,7 +21,7 @@ class NewsViewModel(
 
     fun searchNews(searchQuery : String) = viewModelScope.launch {
         searchNews.postValue(Resource.Loading())
-        val response = newsRepository.searchNews(searchQuery)
+        val response = songRepository.searchNews(searchQuery)
         searchNews.postValue(handleSearchNewsResponse(response))
     }
 
@@ -50,5 +50,5 @@ class NewsViewModel(
     fun deleteArticle(article: Article) = viewModelScope.launch {
         newsRepository.deleteArticle(article)
     }*/
-    fun getSavedNews() = newsRepository.getSavedNews()
+    fun getSavedNews() = songRepository.getSavedNews()
 }

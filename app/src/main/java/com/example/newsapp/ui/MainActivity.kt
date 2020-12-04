@@ -6,24 +6,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.db.ArticleDatabase
-import com.example.newsapp.db.NewsViewModelProviderFactory
+import com.example.newsapp.db.SongViewModelProviderFactory
 import com.example.newsapp.R
-import com.example.newsapp.db.NewsRepository
-import com.example.newsapp.db.NewsViewModel
+import com.example.newsapp.db.SongRepository
+import com.example.newsapp.db.SongViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class NewsActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: NewsViewModel
+    lateinit var viewModel: SongViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val newsRepository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
+        val newsRepository = SongRepository(ArticleDatabase(this))
+        val viewModelProviderFactory = SongViewModelProviderFactory(newsRepository)
+        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(SongViewModel::class.java)
         bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
     }
 }

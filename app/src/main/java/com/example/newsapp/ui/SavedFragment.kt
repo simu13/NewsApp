@@ -1,7 +1,6 @@
 package com.example.newsapp.ui
 
 import android.os.Bundle
-import android.util.Log.d
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -10,17 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.adapters.SongAdapter
-import com.example.newsapp.db.NewsViewModel
-import kotlinx.android.synthetic.main.fragment_saved_news.*
+import com.example.newsapp.db.SongViewModel
+import kotlinx.android.synthetic.main.fragment_saved.*
 
-class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
-    lateinit var viewModel: NewsViewModel
+class SavedFragment : Fragment(R.layout.fragment_saved) {
+
+    lateinit var viewModel: SongViewModel
     lateinit var songAdapter: SongAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
+        viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
 
