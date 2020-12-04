@@ -3,24 +3,24 @@ package com.example.newsapp.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
-import com.example.newsapp.adapters.NewsAdapter
+import com.example.newsapp.adapters.SongAdapter
+import com.example.newsapp.db.ArticleDao
 
-import com.example.newsapp.ui.NewsActivity
 import com.example.newsapp.db.NewsViewModel
+import com.example.newsapp.model.Article
 import com.example.newsapp.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.android.synthetic.main.fragment_breaking_news.paginationProgressBar
 import kotlinx.android.synthetic.main.fragment_search_news.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.item_article_preview.*
+import kotlinx.coroutines.*
 
 
 class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
@@ -28,19 +28,23 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     val TAG = "SearchNewsFragment"
 
     lateinit var viewModel: NewsViewModel
-    lateinit var newsAdapter:NewsAdapter
+    lateinit var songAdapter:SongAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
-        newsAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("article",it)
-            }
-            findNavController().navigate(
-                R.id.action_searchNewsFragment_to_articleFragment,
-            bundle)
+
+        songAdapter.setOnItemClickListener {
+
+val name = it.artistName
+            val collection = it.collectionName
+            val price = it.collectionPrice
+            val trackName = it.trackName
+            val collectionPrice = it.collectionPrice
+            val article = Article(name,collection,price,trackName,collectionPrice)
+            GlobalScope.launch { viewModel.newsRepository.upsert(article) }
+            Toast.makeText(activity,"Saved in Room Database",Toast.LENGTH_LONG).show()
         }
         var job: Job? = null
         etSearch.addTextChangedListener{editable ->
@@ -59,7 +63,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles)
+                        songAdapter.differ.submitList(newsResponse.results)
                     }
                 }
                 is Resource.Error -> {
@@ -83,9 +87,9 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     }
 
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
+        songAdapter = SongAdapter()
         rvSearchNews.apply {
-            adapter = newsAdapter
+            adapter = songAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }

@@ -1,6 +1,5 @@
 package com.example.newsapp.model
 
-
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -9,14 +8,16 @@ import java.io.Serializable
     tableName = "articles"
 )
 data class Article(
+
+    val artistName: String="",
+    val collectionName: String="",
+    val collectionPrice: Double=0.0,
+    val trackName: String="",
+
+    val trackPrice: Double=0.0
+
+): Serializable
+{
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null,
-    val author: String,
-    val content: String,
-    val description: String,
-    val publishedAt: String,
-    val source: Source,
-    val title: String,
-    val url: String,
-    val urlToImage: String
-):Serializable
+    var id: Int? = null
+}

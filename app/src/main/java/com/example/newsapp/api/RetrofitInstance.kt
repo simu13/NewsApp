@@ -1,7 +1,6 @@
 package com.example.newsapp.api
 
 
-import com.example.newsapp.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,14 +16,14 @@ class RetrofitInstance {
                 .addInterceptor(logging)
                 .build()
             Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl("https://itunes.apple.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
         }
 
         val api by lazy {
-            retrofit.create(NewsAPI::class.java)
+            retrofit.create(SearchAPI::class.java)
         }
     }
 }
